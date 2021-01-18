@@ -8,7 +8,7 @@ When you ask mycroft about your next appointment, it answers with the next appoi
 * "What's my next appointment?"
 
 ## Credits
-mn062
+mn062 / dv031
 
 ## Category
 **Daily**
