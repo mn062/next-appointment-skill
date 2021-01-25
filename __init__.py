@@ -36,12 +36,15 @@ class NextAppointment(MycroftSkill):
         self.events_fetched = self.calendar.date_search(
             start = datetime.now(), end = datetime(2024, 1, 1), expand=True)
 
-        # get name and start time of first appointment
-        self.summary = self.events_fetched[0].vobject_instance.vevent.summary.value
-        self.dtstart = self.events_fetched[0].vobject_instance.vevent.dtstart.value
+        # get name and start time of first appointment if there is one
+        if self.events_fetched:
+           self.summary = self.events_fetched[0].vobject_instance.vevent.summary.value
+           self.dtstart = self.events_fetched[0].vobject_instance.vevent.dtstart.value
 
     def getAppointment(self):
-        return self.dtstart.strftime("Your next appointment is on %B %d, %Y at %I:%M %p and is entitled " + self.summary)
-
+        if not self.events_fetched:
+           return "There is no upcoming appointment"
+        else:
+           return self.dtstart.strftime("Your next appointment is on %B %d, %Y at " + str(self.dtstart.hour+1) + ":%M %p and is entitled " + self.summary)
 def create_skill():
     return NextAppointment()
